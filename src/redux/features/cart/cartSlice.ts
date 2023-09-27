@@ -16,18 +16,35 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action: PayloadAction<IProduct>) => {
-
-            const existingProduct = state.products.find(product => product._id = action.payload._id)
-
+            const existingProduct = state.products.find(product => product._id = action.payload._id);
             if (!existingProduct) {
-                state.products.push({ ...action.payload, quantity: 1 })
+                state.products.push({ ...action.payload, quantity: 1 });
             } else {
-                existingProduct.quantity = existingProduct.quantity! + 1
+                existingProduct.quantity = existingProduct.quantity! + 1;
             }
+        },
+        addOne: (state, action: PayloadAction<IProduct>) => {
+            const cartProduct = state.products.find(product => product._id = action.payload._id);
+            if (!cartProduct) {
+                console.log('Error');
+            } else {
+                cartProduct.quantity = cartProduct.quantity! + 1;
+            }
+        },
+        removeOne: (state, action: PayloadAction<IProduct>) => {
+            const existingProduct = state.products.find(product => product._id = action.payload._id);
+            if (existingProduct && existingProduct.quantity! > 0) {
+                existingProduct.quantity = existingProduct.quantity! - 1;
+            } else {
+                state.products = state.products.filter(product => product._id !== action.payload._id);
+            }
+        },
+        removeFromCart: (state, action: PayloadAction<IProduct>) => {
+            state.products = state.products.filter(product => product._id !== action.payload._id);
         }
     },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, removeOne, addOne } = cartSlice.actions;
 
 export default cartSlice.reducer;
