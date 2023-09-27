@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Sheet,
   SheetContent,
@@ -13,11 +14,13 @@ import {
 } from 'react-icons/hi';
 import { Button } from './ui/button';
 import { IProduct } from '@/types/globalTypes';
+import { useAppSelector } from '@/redux/hook';
 
 export default function Cart() {
-  //! Dummy data
 
-  const products: IProduct[] = [];
+  const {products} = useAppSelector((state) => state.cart)
+
+  //! Dummy data
   const total = 0;
 
   //! **
