@@ -1,5 +1,4 @@
 import { Toaster } from './components/ui/Toaster';
-import Footer from './layouts/Footer';
 import MainLayout from './layouts/MainLayout';
 
 function App() {
@@ -7,7 +6,7 @@ function App() {
     <div>
       <Toaster />
       <MainLayout />
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }
