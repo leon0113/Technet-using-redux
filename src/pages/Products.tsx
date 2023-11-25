@@ -18,15 +18,15 @@ export default function Products() {
   //     .then((data) => setData(data));
   // }, []);
 
-   const {data, isLoading} = useGetProductsQuery(undefined);
-    //  console.log(isLoading);
+  const { data, isLoading } = useGetProductsQuery(undefined);
+  console.log(data);
   const { toast } = useToast();
 
-   const {priceRange, status} = useAppSelector(state => state.product);
-   const dispatch = useAppDispatch();
+  const { priceRange, status } = useAppSelector(state => state.product);
+  const dispatch = useAppDispatch();
 
-  const handleSlider = (value : number[]) => {
-              // herer value contain an array of number[0] & a length property[1]. we just need the number property as value
+  const handleSlider = (value: number[]) => {
+    // herer value contain an array of number[0] & a length property[1]. we just need the number property as value
     dispatch(setPriceRange(value[0]))
   };
 
@@ -48,7 +48,7 @@ export default function Products() {
         <div>
           <h1 className="text-2xl uppercase">Availability</h1>
           <div className="flex items-center space-x-2 mt-3">
-            <Switch onClick={()=> dispatch(toggleState())} id="in-stock" />
+            <Switch onClick={() => dispatch(toggleState())} id="in-stock" />
             <Label htmlFor="in-stock">In stock</Label>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Products() {
           <div className="max-w-xl">
             <Slider
               defaultValue={[150]}
-              max={150}
+              max={15000}
               min={0}
               step={1}
               onValueChange={(value) => handleSlider(value)}

@@ -19,8 +19,8 @@ import { addOne, addToCart, removeFromCart, removeOne } from '@/redux/features/c
 
 export default function Cart() {
 
-  const {products, total} = useAppSelector((state) => state.cart);
- const dispatch = useAppDispatch();
+  const { products, total } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   // //! Dummy data
   // const total = 0;
 
@@ -56,14 +56,14 @@ export default function Cart() {
                 </p>
               </div>
               <div className="border-l pl-5 flex flex-col justify-between">
-                <Button onClick={()=> dispatch(addOne(product))}>
+                <Button onClick={() => dispatch(addOne(product))}>
                   <HiOutlinePlus size="20" />
                 </Button>
-                <Button onClick={()=> dispatch(removeOne(product))}>
+                <Button onClick={() => dispatch(removeOne(product))}>
                   <HiMinus size="20" />
                 </Button>
-                <Button 
-                 onClick={()=> dispatch(removeFromCart(product))}
+                <Button
+                  onClick={() => dispatch(removeFromCart(product))}
                   variant="destructive"
                   className="bg-red-500 hover:bg-red-400"
                 >

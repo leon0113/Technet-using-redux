@@ -24,7 +24,7 @@ const cartSlice = createSlice({
             } else {
                 existingProduct.quantity = existingProduct.quantity! + 1;
             }
-            state.total += action.payload.price
+            state.total += action.payload.price;
         },
         addOne: (state, action: PayloadAction<IProduct>) => {
             const cartProduct = state.products.find(product => product._id === action.payload._id);
@@ -33,21 +33,21 @@ const cartSlice = createSlice({
             } else {
                 cartProduct.quantity = cartProduct.quantity! + 1;
             }
-            state.total += action.payload.price
+            state.total += action.payload.price;
         },
         removeOne: (state, action: PayloadAction<IProduct>) => {
             const existingProduct = state.products.find(product => product._id === action.payload._id);
-            if (existingProduct && existingProduct.quantity! > 0) {
+            if (existingProduct && existingProduct.quantity! > 1) {
                 existingProduct.quantity = existingProduct.quantity! - 1;
             } else {
                 state.products = state.products.filter(product => product._id !== action.payload._id);
             }
-            state.total -= action.payload.price
+            state.total -= action.payload.price;
         },
         removeFromCart: (state, action: PayloadAction<IProduct>) => {
             state.products = state.products.filter(product => product._id !== action.payload._id);
 
-            state.total -= action.payload.price * action.payload.quantity!
+            state.total -= action.payload.price * action.payload.quantity!;
         }
     },
 });
