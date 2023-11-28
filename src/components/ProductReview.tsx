@@ -4,14 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { FiSend } from 'react-icons/fi';
-import { usePostCommentMutation } from '@/redux/api/apiSlice';
+import { useGetCommentsQuery, usePostCommentMutation } from '@/redux/features/products/productApi';
 
-const dummyComments = [
-  'Bhalo na',
-  'Ki shob ghori egula??',
-  'Eta kono product holo ??',
-  '200 taka dibo, hobe ??',
-];
+// const dummyComments = [
+//   'Bhalo na',
+//   'Ki shob ghori egula??',
+//   'Eta kono product holo ??',
+//   '200 taka dibo, hobe ??',
+// ];
 
 interface IProps {
   id: string;
@@ -21,11 +21,12 @@ export default function ProductReview({ id }: IProps) {
   const [inputValue, setInputValue] = useState<string>('');
 
   const [postComment, { isLoading, isError, isSuccess }] = usePostCommentMutation();
+  const { data } = useGetCommentsQuery(id, { refetchOnMountOrArgChange: true, pollingInterval: 30000 });
 
   console.log(isLoading);
   console.log(isError);
   console.log(isSuccess);
-  
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(inputValue);
@@ -59,7 +60,7 @@ export default function ProductReview({ id }: IProps) {
         </Button>
       </form>
       <div className="mt-10">
-        {dummyComments.map((comment, index) => (
+        {data?.comments?.map((comment: string, index: number) => (
           <div key={index} className="flex gap-3 items-center mb-5">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />

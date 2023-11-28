@@ -12,8 +12,28 @@ import {
 import { HiOutlineSearch } from 'react-icons/hi';
 import Cart from '../components/Cart';
 import logo from '../assets/images/technet-logo.png';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { setUser } from '@/redux/features/user/userSlice';
 
 export default function Navbar() {
+
+  const { user } = useAppSelector(state => state.user);
+
+  const dispatch = useAppDispatch()
+
+  const handleLogout = () => {
+    console.log("object");
+    signOut(auth)
+      .then(() => {
+        dispatch(setUser(null))
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
       <div className="h-full w-full bg-white/60">
@@ -60,9 +80,23 @@ export default function Navbar() {
                     <DropdownMenuItem className="cursor-pointer">
                       Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      Billing
-                    </DropdownMenuItem>
+                    {!user.email && <>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Link to='/login'>
+                          Login
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Link to='/signup'>
+                          SignUp
+                        </Link>
+                      </DropdownMenuItem>
+                    </>}
+                    {
+                      user.email && <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                        Logout
+                      </DropdownMenuItem>
+                    }
                     <DropdownMenuItem className="cursor-pointer">
                       Team
                     </DropdownMenuItem>

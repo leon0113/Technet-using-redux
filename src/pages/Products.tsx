@@ -4,11 +4,10 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-import { useGetProductsQuery } from '@/redux/api/apiSlice';
+import { useGetProductsQuery } from '@/redux/features/products/productApi';
 import { setPriceRange, toggleState } from '@/redux/features/products/productSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { IProduct } from '@/types/globalTypes';
-import { useEffect, useState } from 'react';
 
 export default function Products() {
   // const [data, setData] = useState<IProduct[]>([]);
@@ -19,14 +18,14 @@ export default function Products() {
   // }, []);
 
   const { data, isLoading } = useGetProductsQuery(undefined);
-  console.log(data);
+  // console.log(data);
   const { toast } = useToast();
 
   const { priceRange, status } = useAppSelector(state => state.product);
   const dispatch = useAppDispatch();
 
   const handleSlider = (value: number[]) => {
-    // herer value contain an array of number[0] & a length property[1]. we just need the number property as value
+    // here value contain an array of number[0] & a length property[1]. we just need the number property as value
     dispatch(setPriceRange(value[0]))
   };
 
@@ -41,7 +40,7 @@ export default function Products() {
   } else {
     productsData = data?.data;
   }
-
+  console.log(productsData);
   return (
     <div className="grid grid-cols-12 max-w-7xl mx-auto relative ">
       <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
